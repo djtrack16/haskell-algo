@@ -69,3 +69,16 @@ numNodes t = length $ bfsList t
 simplePrint :: (Show a) => BTree a -> String
 simplePrint Empty = ""
 simplePrint t = (nodeShow t) ++ " " ++ (simplePrint $ getLeftTree t) ++ (simplePrint $ getRightTree t)
+
+foldTree :: (a -> b -> b) -> b -> BTree a -> b
+foldTree f acc Empty = acc
+foldTree f acc (Node a left right) = foldTree f foldedRightSubtree left where
+    result = f a acc
+    foldedRightSubtree = foldTree f result right
+
+mapTree :: (a -> b) -> BTree a -> BTree b
+mapTree _ Empty = Empty
+mapTree f (Node a left right) = Node (f a) left' right' where
+  left'  = mapTree f left
+  right' = mapTree f right
+  

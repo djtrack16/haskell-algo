@@ -10,9 +10,17 @@ nodeKey (Node x _ _) = Just x
 
 -- Perform inorder walk of the binary search tree.
 -- Cormen, Thomas H., et al. Introduction to algorithms.  pg. 288, MIT press, 2009.
-inorderWalk :: (Eq a, Ord a) => BTree a -> [a]
-inorderWalk Empty = []
-inorderWalk (Node x l r) = (inorderWalk l) ++ [x] ++ (inorderWalk r)
+inorder :: (Eq a, Ord a) => BTree a -> [a]
+inorder Empty = []
+inorder (Node x l r) = inorder l ++ [x] ++ inorder r
+
+preorder :: BTree a -> [a]
+preorder Empty = []
+preorder (Node a left right) = a : preorder left ++ preorder right
+
+postorder :: BTree a -> [a]
+postorder Empty = []
+postorder (Node a left right) = postorder left ++ postorder right ++ [a]
 
 -- Function to insert a value into the tree. Returns the new tree.
 -- Cormen, Thomas H., et al. Introduction to algorithms.  pg. 294, MIT press, 2009.
